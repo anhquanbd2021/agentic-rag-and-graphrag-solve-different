@@ -1,0 +1,45 @@
+﻿<!doctype html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta name='description' content='Interactive lab: agentic RAG pays per query while GraphRAG pays up front.'>
+<title>Agentic RAG / GraphRAG Lab</title>
+<link rel='preconnect' href='https://fonts.googleapis.com'>
+<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap'>
+<link rel='stylesheet' href='/styles.css'>
+<!-- pb-shell --><link rel='stylesheet' href='./pb-shell.css'><!-- pb-shell --><!-- pb-back --><link rel='stylesheet' href='./pb-back.css'><!-- pb-back -->
+</head>
+<body>
+<a class='skip-link' href='#lab-main'>Skip to lab</a>
+<main id='lab-main'>
+  <nav aria-label="Primary"><a aria-current="page" href="/">Lab</a><a href="/guide.html">Guide</a><a href="https://github.com/anhquanbd2021/agentic-rag-and-graphrag-solve-different">Source</a></nav>
+  <header class='hero'>
+    <p class='eyebrow'>Article Playbook · companion lab</p>
+    <h1>Pay once, or pay every question</h1>
+    <p class='lede'>Agentic RAG and GraphRAG are not competing answers. One is a <strong>control loop</strong>; the other is an <strong>index</strong>. This lab makes the trade-off inspectable, including the failure each strategy hides.</p>
+    <p class="warning"><strong>educational model.</strong> The support knowledge base is synthetic. Calls are deterministic unit-cost steps, not provider bills.</p>
+  </header>
+  <section class='controls panel' aria-labelledby='controls-title'>
+    <div class='section-heading'><div><p class='eyebrow'>Scenario controls</p><h2 id='controls-title'>Run the same question three ways</h2></div></div>
+    <div class='control-grid'>
+      <fieldset class="control" aria-label="Strategy"><legend>Strategy</legend><label><input type="radio" name="strategy" value="agentic" checked> <span>Agentic RAG — search and reflect</span></label><label><input type="radio" name="strategy" value="graph"> <span>GraphRAG — traverse a prebuilt index</span></label><label><input type="radio" name="strategy" value="hybrid"> <span>Hybrid — agent traverses the graph</span></label></fieldset>
+      <fieldset class="control" aria-label="Agent budget"><legend>Agent budget</legend><label for="agent-budget">Search rounds: <output id="budget-output" for="agent-budget">1</output></label><input id="agent-budget" type="range" min="1" max="4" step="1" value="1"><p class="muted">A budget below the question’s evidence steps reproduces the query-time failure.</p></fieldset>
+      <fieldset class="control" aria-label="Graph coverage"><legend>Graph coverage</legend><label for="graph-coverage">Indexed edges: <output id="coverage-output" for="graph-coverage">60%</output></label><input id="graph-coverage" type="range" min="0" max="100" step="10" value="60"><p class="muted">Lower coverage models a graph built from an incomplete source set.</p></fieldset>
+      <fieldset class="control" aria-label="Question"><legend>Question</legend><label for="query">Select a support question</label><select id="query"><option value="tax-lookup">What is the current VAT rate?</option><option value="payment-hop" selected>Why did the EU checkout retry fail?</option><option value="refund-exception">Can a refund exceed the invoice amount?</option></select></fieldset>
+    </div>
+    <div class='button-row'><button id='run' type='button'>Run trace</button><button id='reset' type='button' class='secondary'>Reset to failure</button></div>
+  </section>
+  <section class='workspace' aria-label='Strategy results'>
+    <section class='panel result-panel' id='result-panel' aria-live='polite'><p class='eyebrow'>Trace</p><h3>Choose a strategy</h3></section>
+    <section class='panel' aria-labelledby='trace-title'><div class='section-heading'><div><p class='eyebrow'>Inspectable path</p><h2 id='trace-title'>What the system does</h2></div></div><ol id='trace-list' class='trace-list' aria-label='Trace steps'></ol></section>
+    <section class='panel' aria-labelledby='workload-title'><div class='section-heading'><div><p class='eyebrow'>Workload</p><h2 id='workload-title'>Three questions, one control plane</h2></div><span id='summary' class='badge' role='status' aria-live='polite'>—</span></div><ul id='workload-list' class='workload-list' aria-label='Workload outcomes'></ul></section>
+  </section>
+  <section class='metrics panel' aria-labelledby='metrics-title'><div class='section-heading'><div><p class='eyebrow'>Cost model</p><h2 id='metrics-title'>Where the bill appears</h2></div></div><dl class='metrics-grid'><div><dt>Build calls</dt><dd id='build-total'>—</dd></div><div><dt>Per-query calls</dt><dd id='per-query-total'>—</dd></div><div><dt>30-query total</dt><dd id='call-total'>—</dd></div></dl></section>
+  <p class='closing-links'><a href='/guide.html'>Read the guide</a><span class='sep' aria-hidden='true'>·</span><a href='https://github.com/anhquanbd2021/agentic-rag-and-graphrag-solve-different'>Inspect source and tests</a></p>
+</main>
+<script type='module' src='/app.js'></script>
+<!-- pb-shell --><a class='pb-shell' href='https://github.com/anhquanbd2021/agentic-rag-and-graphrag-solve-different' title='agentic-rag-and-graphrag-solve-different — an Article Playbook demo (view source)'><svg width='15' height='15' viewBox='0 0 24 24' fill='none' aria-hidden='true'><rect x='2' y='2' width='9' height='9' rx='2' fill='#2dd4bf'/><rect x='13' y='2' width='9' height='9' rx='2' fill='#2dd4bf' opacity='.45'/><rect x='2' y='13' width='9' height='9' rx='2' fill='#2dd4bf' opacity='.45'/><rect x='13' y='13' width='9' height='9' rx='4.5' fill='#2dd4bf'/></svg><b>agentic-rag-and-graphrag-solve-different</b><i>DEMO</i></a><!-- pb-shell --><!-- pb-back --><a class='pb-back' id='pb-back' href='https://github.com/anhquanbd2021/agentic-rag-and-graphrag-solve-different' title='Back to the article — agentic-rag-and-graphrag-solve-different'>← Article <i>PLAYBOOK</i></a><script>(function(){var a=document.getElementById('pb-back');if(!a)return;var h=location.hostname;if(/^(localhost|127\.0\.0\.1|192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[01])\.)/.test(h)){a.href='//'+h+':'+(/^(localhost|127\.0\.0\.1)$/.test(h)?'1234':'30082')+'/microsites/article.html?slug=agentic-rag-and-graphrag-solve-different';}})();</script><!-- pb-back -->
+</body>
+</html>
